@@ -1,19 +1,55 @@
+import java.util.Scanner;
+
 public class PalindroneChecker2 {
 
     public static void main(String[] args) {
 
-        System.out.println("Palindrome Checker - UC2");
+        Scanner scanner = new Scanner(System.in);
 
-        String original = "madam";
+        System.out.println("Palindrome Checker - UC3");
+        System.out.println("1. String Palindrome");
+        System.out.println("2. Number Palindrome");
+        System.out.print("Enter your choice: ");
 
-        String cleanString = original.replaceAll("\\s+", "").toLowerCase();
+        int choice = scanner.nextInt();
+        scanner.nextLine();
 
-        String reversed = new StringBuilder(cleanString).reverse().toString();
+        if (choice == 1) {
 
-        if (cleanString.equals(reversed)) {
-            System.out.println("\"" + original + "\" is a palindrome.");
+            System.out.print("Enter string: ");
+            String str = scanner.nextLine();
+
+            String clean = str.replaceAll("\\s+", "").toLowerCase();
+            String rev = new StringBuilder(clean).reverse().toString();
+
+            if (clean.equals(rev)) {
+                System.out.println("Palindrome");
+            } else {
+                System.out.println("Not Palindrome");
+            }
+
+        } else if (choice == 2) {
+
+            System.out.print("Enter number: ");
+            int num = scanner.nextInt();
+
+            int original = num, rev = 0;
+
+            while (num != 0) {
+                rev = rev * 10 + num % 10;
+                num /= 10;
+            }
+
+            if (original == rev) {
+                System.out.println("Palindrome");
+            } else {
+                System.out.println("Not Palindrome");
+            }
+
         } else {
-            System.out.println("\"" + original + "\" is not a palindrome.");
+            System.out.println("Invalid Choice");
         }
+
+        scanner.close();
     }
 }
