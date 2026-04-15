@@ -6,48 +6,33 @@ public class PalindroneChecker2 {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Palindrome Checker - UC3");
-        System.out.println("1. String Palindrome");
-        System.out.println("2. Number Palindrome");
-        System.out.print("Enter your choice: ");
+        System.out.println("Palindrome Checker - UC4 (Character Array)");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
 
-        if (choice == 1) {
+        String clean = input.replaceAll("\\s+", "").toLowerCase();
 
-            System.out.print("Enter string: ");
-            String str = scanner.nextLine();
+        char[] arr = clean.toCharArray();
 
-            String clean = str.replaceAll("\\s+", "").toLowerCase();
-            String rev = new StringBuilder(clean).reverse().toString();
+        int left = 0;
+        int right = arr.length - 1;
 
-            if (clean.equals(rev)) {
-                System.out.println("Palindrome");
-            } else {
-                System.out.println("Not Palindrome");
+        boolean isPalindrome = true;
+
+        while (left < right) {
+            if (arr[left] != arr[right]) {
+                isPalindrome = false;
+                break;
             }
+            left++;
+            right--;
+        }
 
-        } else if (choice == 2) {
-
-            System.out.print("Enter number: ");
-            int num = scanner.nextInt();
-
-            int original = num, rev = 0;
-
-            while (num != 0) {
-                rev = rev * 10 + num % 10;
-                num /= 10;
-            }
-
-            if (original == rev) {
-                System.out.println("Palindrome");
-            } else {
-                System.out.println("Not Palindrome");
-            }
-
+        if (isPalindrome) {
+            System.out.println("\"" + input + "\" is a palindrome.");
         } else {
-            System.out.println("Invalid Choice");
+            System.out.println("\"" + input + "\" is not a palindrome.");
         }
 
         scanner.close();
