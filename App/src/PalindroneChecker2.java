@@ -1,24 +1,19 @@
-import java.util.Scanner;
-
 public class PalindroneChecker2 {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        System.out.println("Palindrome Checker - UC2");
 
-        System.out.println("Palindrome Checker - UC1");
-        System.out.print("Enter a string: ");
+        String original = "madam";
 
-        String input = scanner.nextLine();
+        String cleanString = original.replaceAll("\\s+", "").toLowerCase();
 
-        String reversed = new StringBuilder(input).reverse().toString();
+        String reversed = new StringBuilder(cleanString).reverse().toString();
 
-        if (input.equalsIgnoreCase(reversed)) {
-            System.out.println("The string is a palindrome.");
+        if (cleanString.equals(reversed)) {
+            System.out.println("\"" + original + "\" is a palindrome.");
         } else {
-            System.out.println("The string is not a palindrome.");
+            System.out.println("\"" + original + "\" is not a palindrome.");
         }
-
-        scanner.close();
     }
 }
