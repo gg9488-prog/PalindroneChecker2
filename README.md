@@ -1,29 +1,34 @@
 # PalindroneChecker2
 
-Use Case 11 (UC11): Object-Oriented Palindrome Service
+# 🧩 PalindromeCheckerApp
 
+ Use Case 12 (UC12): Strategy Pattern for Palindrome Algorithms (Advanced)
 
-Objective
+ Objective
+The objective of UC12 is to design a flexible palindrome checking system using the Strategy Pattern, allowing different algorithms (Stack-based and Deque-based) to be selected dynamically at runtime.
 
-The objective of UC11 is to design a reusable palindrome checking service using object-oriented principles by encapsulating the logic within a dedicated class.
-
- Running Procedure
+Running Procedure
 1. Save the file as `PalindroneChecker2.java`
 2. Open terminal / command prompt
 3. Navigate to project folder
-4. Compile the program:
+4. Compile the program
 5. Run the program:
 
 Flow of Project
+
 Start
   ↓
-Read Input String
+Display Strategy Options
   ↓
-Create PalindromeChecker Object
+Read User Choice
   ↓
-Call checkPalindrome() Method
+Select Strategy (Stack / Deque)
   ↓
-Process String (Normalize & Compare)
+Create PalindromeService Object
+  ↓
+Input String
+  ↓
+Apply Selected Strategy
   ↓
 Return Result
   ↓
@@ -31,49 +36,88 @@ Display Output
   ↓
 End
 
-
 Topics Covered
 * Java Program Structure
-* Object-Oriented Programming (OOP)
-* Encapsulation
-* Class and Object
-* Method Creation
-* String Handling
-* Two-Pointer Technique
+* Interfaces
+* Polymorphism
+* Strategy Design Pattern
+* Stack Data Structure
+* Deque Data Structure
+* Object-Oriented Programming
 
 Use Case
-* Promotes reusable and modular code
-* Separates logic from execution
-* Improves code readability and maintainability
-* Demonstrates real-world OOP design
+* Enables dynamic selection of palindrome algorithms
+* Promotes flexible and scalable design
+* Demonstrates real-world design pattern usage
+* Improves code reusability and maintainability
 
-
-
-UC11 Code
+UC12 Code
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Scanner;
-class PalindromeChecker {
-    public boolean checkPalindrome(String input) {
+import java.util.Stack;
+interface PalindromeStrategy {
+    boolean isPalindrome(String input);
+}
+class StackStrategy implements PalindromeStrategy {
+    public boolean isPalindrome(String input) {
         String clean = input.replaceAll("\\s+", "").toLowerCase();
-        int left = 0;
-        int right = clean.length() - 1;
-        while (left < right) {
-            if (clean.charAt(left) != clean.charAt(right)) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : clean.toCharArray()) {
+            stack.push(c);
+        }
+        for (char c : clean.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-            left++;
-            right--;
         }
         return true;
     }
 }
+class DequeStrategy implements PalindromeStrategy {
+    public boolean isPalindrome(String input) {
+        String clean = input.replaceAll("\\s+", "").toLowerCase();
+        Deque<Character> deque = new LinkedList<>();
+        for (char c : clean.toCharArray()) {
+            deque.addLast(c);
+        }
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+class PalindromeService {
+    private PalindromeStrategy strategy;
+    public PalindromeService(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+    public boolean check(String input) {
+        return strategy.isPalindrome(input);
+    }
+}
+
 public class PalindroneChecker2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        PalindromeChecker checker = new PalindromeChecker();
-        System.out.println("Palindrome Checker - UC11 (OOP)");
+        System.out.println("Palindrome Checker - UC12 (Strategy Pattern)");
+        System.out.println("1. Stack Strategy");
+        System.out.println("2. Deque Strategy");
+        System.out.print("Choose strategy: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        PalindromeStrategy strategy;
+        if (choice == 1) {
+            strategy = new StackStrategy();
+        } else {
+            strategy = new DequeStrategy();
+        }
+        PalindromeService service = new PalindromeService(strategy);
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
-        boolean result = checker.checkPalindrome(input);
+        boolean result = service.check(input);
         if (result) {
             System.out.println("\"" + input + "\" is a palindrome.");
         } else {
@@ -84,12 +128,13 @@ public class PalindroneChecker2 {
 }
 
  Sample Output
-Palindrome Checker - UC11 (OOP)
+Palindrome Checker - UC12 (Strategy Pattern)
+1. Stack Strategy
+2. Deque Strategy
+Choose strategy: 1
 Enter a string: racecar
 "racecar" is a palindrome.
 
 Conclusion
-UC11 demonstrates how object-oriented principles like encapsulation and modular design can be applied to create reusable and maintainable palindrome checking logic.
-
-
+UC12 demonstrates an advanced and scalable approach to palindrome checking using the Strategy Pattern, enabling dynamic algorithm selection and promoting clean, maintainable code design.
 
