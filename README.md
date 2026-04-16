@@ -1,94 +1,121 @@
 # PalindroneChecker2
 
- BookMyStay App
- Use Case 6 (UC6): Booking Allocation from Queue (FIFO Processing)
+Use Case 8 (UC8): Linked List Based Palindrome Checker
 
  Objective
-The objective of UC6 is to process booking requests in a fair manner using a queue, ensuring that requests are handled in the order they were received (First-Come-First-Served).
+The objective of UC8 is to validate whether a string is a palindrome using a singly linked list, applying efficient traversal and in-place reversal techniques.
 
  Running Procedure
 1. Save the file as `PalindroneChecker2.java`
 2. Open terminal / command prompt
 3. Navigate to project folder
 4. Compile the program:
-
 5. Run the program:
-Flow of Project
+java PalindroneChecker2
 
+ Flow of Project
 Start
   ↓
-Initialize Booking Queue
+Read Input String
   ↓
-Add Booking Requests to Queue
+Remove Spaces & Convert to Lowercase
   ↓
-Process Requests using FIFO
+Convert String to Linked List
   ↓
-Remove Request using poll()
+Find Middle using Fast & Slow Pointer
   ↓
-Confirm Booking
+Reverse Second Half of List
   ↓
-Repeat until Queue is Empty
+Compare First Half and Second Half
+  ↓
+Is Equal?
+  ↓        ↓
+Yes       No
+ ↓         ↓
+Palindrome  Not Palindrome
   ↓
 End
 
 Topics Covered
-
 * Java Program Structure
-* Queue Interface
-* LinkedList Implementation
-* FIFO Principle
-* Object-Oriented Programming (Class & Object)
-* Looping (`while`)
-* Data Structure Application
+* Scanner Class (User Input)
+* String Handling
+* Singly Linked List
+* Node Creation and Traversal
+* Fast and Slow Pointer Technique
+* In-Place Reversal
+* Conditional Statements
 
+Use Case
+* Demonstrates advanced data structure usage
+* Efficient palindrome checking without extra space
+* Applies real-world linked list operations
+* Strengthens algorithmic thinking
 
- Use Case
-
-* Ensures fair booking allocation
-* Processes requests in arrival order
-* Simulates real-world booking systems
-* Helps understand queue-based processing
-
-
-
-UC6 Code
-
-import java.util.LinkedList;
-import java.util.Queue;
-
-class Reservation {
-    String guestName;
-    int roomNumber;
-    Reservation(String guestName, int roomNumber) {
-        this.guestName = guestName;
-        this.roomNumber = roomNumber;
+ UC8 Code
+import java.util.Scanner;
+class Node {
+    char data;
+    Node next;
+    Node(char data) {
+        this.data = data;
+        this.next = null;
     }
 }
-
 public class PalindroneChecker2 {
     public static void main(String[] args) {
-        Queue<Reservation> bookingQueue = new LinkedList<>();
-        bookingQueue.add(new Reservation("Harsha", 101));
-        bookingQueue.add(new Reservation("Ravi", 102));
-        bookingQueue.add(new Reservation("Anu", 103));
-        System.out.println("Processing Booking Requests (FIFO):");
-        while (!bookingQueue.isEmpty()) {
-            Reservation r = bookingQueue.poll();
-            System.out.println("Booking confirmed for " + r.guestName + " in Room " + r.roomNumber);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Palindrome Checker - UC8 (Linked List)");
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
+        String clean = input.replaceAll("\\s+", "").toLowerCase();
+        Node head = null, tail = null;
+        for (int i = 0; i < clean.length(); i++) {
+            Node newNode = new Node(clean.charAt(i));
+            if (head == null) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
         }
-        System.out.println("All booking requests processed.");
+        Node slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        Node prev = null, current = slow;
+        while (current != null) {
+            Node next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        Node first = head;
+        Node second = prev;
+        boolean isPalindrome = true;
+        while (second != null) {
+            if (first.data != second.data) {
+                isPalindrome = false;
+                break;
+            }
+            first = first.next;
+            second = second.next;
+        }
+        if (isPalindrome) {
+            System.out.println("\"" + input + "\" is a palindrome.");
+        } else {
+            System.out.println("\"" + input + "\" is not a palindrome.");
+        }
+        scanner.close();
     }
 }
 
 Sample Output
-Processing Booking Requests (FIFO):
-Booking confirmed for Harsha in Room 101
-Booking confirmed for Ravi in Room 102
-Booking confirmed for Anu in Room 103
-All booking requests processed.
-
+PalindroneChecker2 - UC8 (Linked List)
+Enter a string: madam
+"madam" is a palindrome.
 
 Conclusion
-UC6 demonstrates how a queue can be used to process booking requests fairly and efficiently, ensuring that all users are served in the order of arrival.
+UC8 demonstrates an advanced and optimized approach to palindrome checking using linked lists, combining efficient traversal and in-place operations to minimize extra memory usage.
 
- 

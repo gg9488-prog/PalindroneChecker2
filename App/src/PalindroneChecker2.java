@@ -1,6 +1,14 @@
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Scanner;
+
+class Node {
+    char data;
+    Node next;
+
+    Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
 
 public class PalindroneChecker2 {
 
@@ -8,29 +16,53 @@ public class PalindroneChecker2 {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Palindrome Checker - UC7 (Deque Based)");
+        System.out.println("Palindrome Checker - UC8 (Linked List)");
 
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
         String clean = input.replaceAll("\\s+", "").toLowerCase();
 
-        Deque<Character> deque = new LinkedList<>();
+        Node head = null, tail = null;
 
         for (int i = 0; i < clean.length(); i++) {
-            deque.addLast(clean.charAt(i));
+            Node newNode = new Node(clean.charAt(i));
+            if (head == null) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
         }
+
+        Node slow = head, fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        Node prev = null, current = slow;
+
+        while (current != null) {
+            Node next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        Node first = head;
+        Node second = prev;
 
         boolean isPalindrome = true;
 
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
+        while (second != null) {
+            if (first.data != second.data) {
                 isPalindrome = false;
                 break;
             }
+            first = first.next;
+            second = second.next;
         }
 
         if (isPalindrome) {
