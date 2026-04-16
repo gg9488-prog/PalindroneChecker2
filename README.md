@@ -1,102 +1,94 @@
 # PalindroneChecker2
 
- Use Case 5 (UC5): Stack-Based Palindrome Checker
+ BookMyStay App
+ Use Case 6 (UC6): Booking Allocation from Queue (FIFO Processing)
 
  Objective
-The objective of UC5 is to validate whether a string is a palindrome using a stack data structure, leveraging its LIFO (Last In First Out) behavior to reverse characters.
+The objective of UC6 is to process booking requests in a fair manner using a queue, ensuring that requests are handled in the order they were received (First-Come-First-Served).
 
  Running Procedure
-1. Save the file as `UseCase5PalindromeCheckerApp.java`
+1. Save the file as `PalindroneChecker2.java`
 2. Open terminal / command prompt
 3. Navigate to project folder
 4. Compile the program:
 
-id="q7k2mr"
-javac UseCase5PalindromeCheckerApp.java
 5. Run the program:
-
-id="r1y6pw"
-java UseCase5PalindromeCheckerApp
-
 Flow of Project
-id="f9c4zs"
+
 Start
   ↓
-Read Input String
+Initialize Booking Queue
   ↓
-Remove Spaces & Convert to Lowercase
+Add Booking Requests to Queue
   ↓
-Push Characters into Stack
+Process Requests using FIFO
   ↓
-Pop Characters from Stack
+Remove Request using poll()
   ↓
-Compare with Original String
+Confirm Booking
   ↓
-Is Equal?
-  ↓        ↓
-Yes       No
- ↓         ↓
-Palindrome  Not Palindrome
+Repeat until Queue is Empty
   ↓
 End
 
- Topics Covered
+Topics Covered
+
 * Java Program Structure
-* Scanner Class (User Input)
-* String Handling
-* Stack Data Structure
-* Push and Pop Operations
-* Looping (`for`)
-* Conditional Statements
+* Queue Interface
+* LinkedList Implementation
+* FIFO Principle
+* Object-Oriented Programming (Class & Object)
+* Looping (`while`)
+* Data Structure Application
+
 
  Use Case
-* Demonstrates stack-based reversal logic
-* Useful for understanding LIFO principle
-* Applies data structures in problem solving
-* Can be extended to advanced applications
 
- UC5 Code
+* Ensures fair booking allocation
+* Processes requests in arrival order
+* Simulates real-world booking systems
+* Helps understand queue-based processing
 
-import java.util.Scanner;
-import java.util.Stack;
 
-public class UseCase5PalindromeCheckerApp {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Palindrome Checker - UC5 (Stack Based)");
-        System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
-        String clean = input.replaceAll("\\s+", "").toLowerCase();
-        Stack<Character> stack = new Stack<>();
-        for (int i = 0; i < clean.length(); i++) {
-            stack.push(clean.charAt(i));
-        }
-        boolean isPalindrome = true;
-        for (int i = 0; i < clean.length(); i++) {
-            if (clean.charAt(i) != stack.pop()) {
-                isPalindrome = false;
-                break;
-            }
-        }
-        if (isPalindrome) {
-            System.out.println("\"" + input + "\" is a palindrome.");
-        } else {
-            System.out.println("\"" + input + "\" is not a palindrome.");
-        }
-        scanner.close();
+
+UC6 Code
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Reservation {
+    String guestName;
+    int roomNumber;
+    Reservation(String guestName, int roomNumber) {
+        this.guestName = guestName;
+        this.roomNumber = roomNumber;
     }
 }
 
+public class PalindroneChecker2 {
+    public static void main(String[] args) {
+        Queue<Reservation> bookingQueue = new LinkedList<>();
+        bookingQueue.add(new Reservation("Harsha", 101));
+        bookingQueue.add(new Reservation("Ravi", 102));
+        bookingQueue.add(new Reservation("Anu", 103));
+        System.out.println("Processing Booking Requests (FIFO):");
+        while (!bookingQueue.isEmpty()) {
+            Reservation r = bookingQueue.poll();
+            System.out.println("Booking confirmed for " + r.guestName + " in Room " + r.roomNumber);
+        }
+        System.out.println("All booking requests processed.");
+    }
+}
 
- Sample Output
+Sample Output
+Processing Booking Requests (FIFO):
+Booking confirmed for Harsha in Room 101
+Booking confirmed for Ravi in Room 102
+Booking confirmed for Anu in Room 103
+All booking requests processed.
 
-id="m7h2vd"
-Palindrome Checker - UC5 (Stack Based)
-Enter a string: racecar
-"racecar" is a palindrome.
 
 Conclusion
-UC5 demonstrates how a stack can be used to reverse data and validate palindromes efficiently, reinforcing the understanding of stack operations and data structures.
-
+UC6 demonstrates how a queue can be used to process booking requests fairly and efficiently, ensuring that all users are served in the order of arrival.
 
  

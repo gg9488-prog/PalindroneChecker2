@@ -1,40 +1,33 @@
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Reservation {
+    String guestName;
+    int roomNumber;
+
+    Reservation(String guestName, int roomNumber) {
+        this.guestName = guestName;
+        this.roomNumber = roomNumber;
+    }
+}
 
 public class PalindroneChecker2 {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        Queue<Reservation> bookingQueue = new LinkedList<>();
 
-        System.out.println("Palindrome Checker - UC5 (Stack Based)");
+        bookingQueue.add(new Reservation("Harsha", 101));
+        bookingQueue.add(new Reservation("Ravi", 102));
+        bookingQueue.add(new Reservation("Anu", 103));
 
-        System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
+        System.out.println("Processing Booking Requests (FIFO):");
 
-        String clean = input.replaceAll("\\s+", "").toLowerCase();
-
-        Stack<Character> stack = new Stack<>();
-
-        for (int i = 0; i < clean.length(); i++) {
-            stack.push(clean.charAt(i));
+        while (!bookingQueue.isEmpty()) {
+            Reservation r = bookingQueue.poll();
+            System.out.println("Booking confirmed for " + r.guestName + " in Room " + r.roomNumber);
         }
 
-        boolean isPalindrome = true;
-
-        for (int i = 0; i < clean.length(); i++) {
-            if (clean.charAt(i) != stack.pop()) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        if (isPalindrome) {
-            System.out.println("\"" + input + "\" is a palindrome.");
-        } else {
-            System.out.println("\"" + input + "\" is not a palindrome.");
-        }
-
-        scanner.close();
+        System.out.println("All booking requests processed.");
     }
 }
