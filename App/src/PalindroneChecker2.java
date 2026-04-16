@@ -1,33 +1,44 @@
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
-
-class Reservation {
-    String guestName;
-    int roomNumber;
-
-    Reservation(String guestName, int roomNumber) {
-        this.guestName = guestName;
-        this.roomNumber = roomNumber;
-    }
-}
+import java.util.Scanner;
 
 public class PalindroneChecker2 {
 
     public static void main(String[] args) {
 
-        Queue<Reservation> bookingQueue = new LinkedList<>();
+        Scanner scanner = new Scanner(System.in);
 
-        bookingQueue.add(new Reservation("Harsha", 101));
-        bookingQueue.add(new Reservation("Ravi", 102));
-        bookingQueue.add(new Reservation("Anu", 103));
+        System.out.println("Palindrome Checker - UC7 (Deque Based)");
 
-        System.out.println("Processing Booking Requests (FIFO):");
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
 
-        while (!bookingQueue.isEmpty()) {
-            Reservation r = bookingQueue.poll();
-            System.out.println("Booking confirmed for " + r.guestName + " in Room " + r.roomNumber);
+        String clean = input.replaceAll("\\s+", "").toLowerCase();
+
+        Deque<Character> deque = new LinkedList<>();
+
+        for (int i = 0; i < clean.length(); i++) {
+            deque.addLast(clean.charAt(i));
         }
 
-        System.out.println("All booking requests processed.");
+        boolean isPalindrome = true;
+
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if (front != rear) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        if (isPalindrome) {
+            System.out.println("\"" + input + "\" is a palindrome.");
+        } else {
+            System.out.println("\"" + input + "\" is not a palindrome.");
+        }
+
+        scanner.close();
     }
 }
