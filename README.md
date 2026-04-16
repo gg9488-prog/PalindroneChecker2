@@ -1,9 +1,9 @@
 # PalindroneChecker2
 
-Use Case 8 (UC8): Linked List Based Palindrome Checker
+Use Case 9 (UC9): Recursive Palindrome Checker
 
  Objective
-The objective of UC8 is to validate whether a string is a palindrome using a singly linked list, applying efficient traversal and in-place reversal techniques.
+The objective of UC9 is to validate whether a string is a palindrome using recursion, where the function compares characters from both ends and reduces the problem size at each step.
 
  Running Procedure
 1. Save the file as `PalindroneChecker2.java`
@@ -20,19 +20,17 @@ Read Input String
   ↓
 Remove Spaces & Convert to Lowercase
   ↓
-Convert String to Linked List
+Call Recursive Function
   ↓
-Find Middle using Fast & Slow Pointer
+Compare First and Last Characters
   ↓
-Reverse Second Half of List
-  ↓
-Compare First Half and Second Half
-  ↓
-Is Equal?
+Base Condition Reached?
   ↓        ↓
 Yes       No
  ↓         ↓
-Palindrome  Not Palindrome
+Return True  Recursive Call (move inward)
+ ↓
+Display Result
   ↓
 End
 
@@ -40,69 +38,38 @@ Topics Covered
 * Java Program Structure
 * Scanner Class (User Input)
 * String Handling
-* Singly Linked List
-* Node Creation and Traversal
-* Fast and Slow Pointer Technique
-* In-Place Reversal
+* Recursion
+* Base Condition
+* Call Stack
 * Conditional Statements
-
+* 
 Use Case
-* Demonstrates advanced data structure usage
-* Efficient palindrome checking without extra space
-* Applies real-world linked list operations
-* Strengthens algorithmic thinking
+* Demonstrates recursive problem-solving
+* Simplifies palindrome logic using function calls
+* Useful for understanding divide-and-conquer approach
+* Strengthens understanding of call stack behavior
 
- UC8 Code
+UC9 Code
 import java.util.Scanner;
-class Node {
-    char data;
-    Node next;
-    Node(char data) {
-        this.data = data;
-        this.next = null;
+
+public class UseCase9PalindromeCheckerApp {
+    public static boolean isPalindrome(String str, int left, int right) {
+        if (left >= right) {
+            return true;
+        }
+        if (str.charAt(left) != str.charAt(right)) {
+            return false;
+        }
+        return isPalindrome(str, left + 1, right - 1);
     }
-}
-public class PalindroneChecker2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Palindrome Checker - UC8 (Linked List)");
+        System.out.println("Palindrome Checker - UC9 (Recursion)");
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
         String clean = input.replaceAll("\\s+", "").toLowerCase();
-        Node head = null, tail = null;
-        for (int i = 0; i < clean.length(); i++) {
-            Node newNode = new Node(clean.charAt(i));
-            if (head == null) {
-                head = tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-        Node slow = head, fast = head;
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        Node prev = null, current = slow;
-        while (current != null) {
-            Node next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-        Node first = head;
-        Node second = prev;
-        boolean isPalindrome = true;
-        while (second != null) {
-            if (first.data != second.data) {
-                isPalindrome = false;
-                break;
-            }
-            first = first.next;
-            second = second.next;
-        }
-        if (isPalindrome) {
+        boolean result = isPalindrome(clean, 0, clean.length() - 1);
+        if (result) {
             System.out.println("\"" + input + "\" is a palindrome.");
         } else {
             System.out.println("\"" + input + "\" is not a palindrome.");
@@ -111,11 +78,13 @@ public class PalindroneChecker2 {
     }
 }
 
-Sample Output
-PalindroneChecker2 - UC8 (Linked List)
+
+ Sample Output
+Palindrome Checker - UC9 (Recursion)
 Enter a string: madam
 "madam" is a palindrome.
 
+
 Conclusion
-UC8 demonstrates an advanced and optimized approach to palindrome checking using linked lists, combining efficient traversal and in-place operations to minimize extra memory usage.
+UC9 demonstrates an elegant and efficient approach to palindrome checking using recursion, highlighting the importance of base conditions and the role of the call stack in problem-solving.
 
